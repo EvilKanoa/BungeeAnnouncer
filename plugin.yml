@@ -1,0 +1,4 @@
+name: BungeeAnnouncer
+main: ca.kanoa.bungee.announcer.Announcer
+version: 0.1
+author: 12323op

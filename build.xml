@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<project name="${project.name}" default="jar" basedir=".">
+    
+  <!-- Sets variables which can later be used. -->
+  <!-- The value of a property is accessed via ${} -->
+  <property file="build.properties"/>
+
+  <!-- Deletes the existing build, docs and dist directory -->
+  <target name="clean">
+    <delete dir="${build.dir}" />
+    <delete dir="${dist.dir}" />
+  </target>
+
+  <!-- Creates the build, docs and dist directory -->
+  <target name="makedir">
+    <mkdir dir="${build.dir}" />
+    <mkdir dir="${dist.dir}" />
+  </target>
+
+  <!-- Compiles the java code -->
+  <target name="compile" depends="clean, makedir">
+    <javac srcdir="${source.dir}" destdir="${build.dir}" includeantruntime="false" debug="true" debuglevel="lines,vars,source">
+      <classpath>
+        <fileset dir="${lib.dir}">
+    	  <include name="**/*.jar" />
+    	</fileset>
+      </classpath>
+    </javac>
+
+  </target>
+
+  <!-- Creates Javadoc -->
+  <target name="docs" depends="compile">
+    <delete dir="${docs.dir}" />
+    <mkdir dir="${docs.dir}" />
+    <javadoc packagenames="src" sourcepath="${source.dir}" destdir="${docs.dir}">
+      <!-- Define which files / directory should get included, we include all -->
+       <fileset dir="${source.dir}">
+         <include name="**" />
+       </fileset>
+       <classpath>
+         <fileset dir="${lib.dir}">
+    	   <include name="**/*.jar" />
+         </fileset>
+       </classpath>
+    </javadoc>
+  </target>
+  
+  <!-- Creates the jar file -->
+  <target name="jar" depends="compile">
+  	<jar destfile="${dist.dir}\${project.name}.jar" basedir="${build.dir}">
+  		<manifest>
+  	    	<attribute name="Main-Class" value="${main-class}"/>		
+  		</manifest>
+      <!-- <zipfileset dir="." includes="file name"/> -->
+  	  <!-- This is where you add files to the final jar -->
+        <zipfileset dir="." includes="plugin.yml"/>
+    </jar>
+  </target>
+
+</project> 
