@@ -1,0 +1,1 @@
+Download the latest build [here](https://github.com/EvilKanoa/BungeeAnnouncer/blob/master/dist/BungeeAnnouncer.jar?raw=true).
